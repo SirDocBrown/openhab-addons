@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.concurrent.ScheduledExecutorService;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.ecovacs.internal.api.commands.IotDeviceCommand;
 import org.openhab.binding.ecovacs.internal.api.model.CleanLogRecord;
 import org.openhab.binding.ecovacs.internal.api.model.CleanMode;
@@ -35,6 +36,11 @@ public interface EcovacsDevice {
         void onChargingStateUpdated(EcovacsDevice device, boolean charging);
 
         void onCleaningModeUpdated(EcovacsDevice device, CleanMode newMode, Optional<String> areaDefinition);
+
+        default void onCleaningModeUpdated(EcovacsDevice device, CleanMode newMode, Optional<String> areaDefinition,
+                @Nullable CleanMode activeJobMode) {
+            onCleaningModeUpdated(device, newMode, areaDefinition);
+        }
 
         void onCleaningStatsUpdated(EcovacsDevice device, int cleanedArea, int cleaningTimeSeconds);
 

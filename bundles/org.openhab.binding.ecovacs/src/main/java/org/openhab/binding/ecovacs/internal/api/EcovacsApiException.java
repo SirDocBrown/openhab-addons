@@ -17,11 +17,14 @@ import org.eclipse.jetty.client.Response;
 
 /**
  * @author Danny Baumann - Initial contribution
+ * @author Andreas Rothstein - HTTP status preservation
  */
 @NonNullByDefault
 public class EcovacsApiException extends Exception {
     private static final long serialVersionUID = -5903398729974682356L;
     public final boolean isAuthFailure;
+    /** HTTP status, or zero if no HTTP response was received. */
+    public final int httpStatus;
 
     public EcovacsApiException(String reason) {
         this(reason, false);
@@ -30,16 +33,19 @@ public class EcovacsApiException extends Exception {
     public EcovacsApiException(String reason, Throwable cause) {
         super(reason, cause);
         isAuthFailure = false;
+        httpStatus = 0;
     }
 
     public EcovacsApiException(String reason, boolean isAuthFailure) {
         super(reason);
         this.isAuthFailure = isAuthFailure;
+        httpStatus = 0;
     }
 
     public EcovacsApiException(Response response) {
         super("HTTP status " + response.getStatus());
-        isAuthFailure = response.getStatus() == 401;
+        httpStatus = response.getStatus();
+        isAuthFailure = httpStatus == 401;
     }
 
     public EcovacsApiException(Throwable cause) {
@@ -49,5 +55,6 @@ public class EcovacsApiException extends Exception {
     public EcovacsApiException(Throwable cause, boolean isAuthFailure) {
         super(cause);
         this.isAuthFailure = isAuthFailure;
+        httpStatus = 0;
     }
 }
