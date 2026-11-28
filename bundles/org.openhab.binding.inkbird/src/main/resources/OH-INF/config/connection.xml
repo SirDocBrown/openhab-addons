@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config-description:config-descriptions
+	xmlns:config-description="https://openhab.org/schemas/config-description/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://openhab.org/schemas/config-description/v1.0.0 https://openhab.org/schemas/config-description-1.0.0.xsd">
+	<config-description uri="thing-type:inkbird:connection">
+		<parameter name="hostname" type="text" required="true">
+			<context>network-address</context>
+			<label>Device Host</label>
+			<description>IP address or hostname of the appliance</description>
+		</parameter>
+		<parameter name="deviceId" type="text" required="true">
+			<label>Device ID</label>
+			<description>Tuya device identifier</description>
+		</parameter>
+		<parameter name="localKey" type="text" required="true">
+			<context>password</context>
+			<label>Local Key</label>
+			<description>16-byte local key obtained via Smart Life QR login</description>
+		</parameter>
+		<parameter name="protocolVersion" type="text">
+			<label>LAN Protocol</label>
+			<description>Protocol version announced by the appliance</description>
+			<default>3.3</default>
+			<options>
+				<option value="3.3">3.3</option>
+				<option value="3.4">3.4</option>
+			</options>
+		</parameter>
+		<parameter name="refreshInterval" type="integer" min="5" unit="s">
+			<label>Refresh Interval</label>
+			<description>Seconds between status reads</description>
+			<default>30</default>
+		</parameter>
+	</config-description>
+</config-description:config-descriptions>
