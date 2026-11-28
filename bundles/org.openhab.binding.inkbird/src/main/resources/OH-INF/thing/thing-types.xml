@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="inkbird"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
+	<thing-type id="itc-308-wifi">
+		<label>Inkbird ITC-308-WIFI</label>
+		<description>Dual-relay heating and cooling controller</description>
+		<channels>
+			<channel id="temperature" typeId="temperature"/>
+			<channel id="target-temperature" typeId="thermostat-target-temperature"/>
+			<channel id="operating-state" typeId="thermostat-operating-state"/>
+			<channel id="high-alarm" typeId="high-alarm"/>
+			<channel id="low-alarm" typeId="low-alarm"/>
+			<channel id="probe-fault" typeId="probe-fault"/>
+		</channels>
+		<representation-property>deviceId</representation-property>
+		<config-description-ref uri="thing-type:inkbird:connection"/>
+	</thing-type>
+	<thing-type id="isv-100w">
+		<label>Inkbird ISV-100W</label>
+		<description>Sous vide immersion circulator</description>
+		<channels>
+			<channel id="temperature" typeId="temperature"/>
+			<channel id="target-temperature" typeId="cooker-target-temperature"/>
+			<channel id="operating-state" typeId="cooker-operating-state"/>
+			<channel id="running" typeId="running"/>
+			<channel id="cooking-time" typeId="cooking-time"/>
+			<channel id="remaining-time" typeId="remaining-time"/>
+			<channel id="fault-code" typeId="fault-code"/>
+		</channels>
+		<representation-property>deviceId</representation-property>
+		<config-description-ref uri="thing-type:inkbird:connection"/>
+	</thing-type>
+	<channel-type id="temperature">
+		<item-type unitHint="°C">Number:Temperature</item-type>
+		<label>Probe Temperature</label>
+		<description>Measured probe temperature</description>
+		<tags>
+			<tag>Measurement</tag>
+			<tag>Temperature</tag>
+		</tags>
+		<state readOnly="true" pattern="%.1f %unit%"/>
+	</channel-type>
+	<channel-type id="thermostat-target-temperature">
+		<item-type unitHint="°C">Number:Temperature</item-type>
+		<label>Target Temperature</label>
+		<description>Requested control temperature</description>
+		<tags>
+			<tag>Setpoint</tag>
+			<tag>Temperature</tag>
+		</tags>
+		<state pattern="%.1f %unit%" min="-50" max="99.9" step="0.1"/>
+		<autoUpdatePolicy>veto</autoUpdatePolicy>
+	</channel-type>
+	<channel-type id="cooker-target-temperature">
+		<item-type unitHint="°C">Number:Temperature</item-type>
+		<label>Target Temperature</label>
+		<description>Requested control temperature</description>
+		<tags>
+			<tag>Setpoint</tag>
+			<tag>Temperature</tag>
+		</tags>
+		<state pattern="%.1f %unit%" min="25" max="96" step="0.1"/>
+		<autoUpdatePolicy>veto</autoUpdatePolicy>
+	</channel-type>
+	<channel-type id="thermostat-operating-state">
+		<item-type>String</item-type>
+		<label>Operating State</label>
+		<description>Operating state reported by the appliance</description>
+		<tags>
+			<tag>Status</tag>
+		</tags>
+		<state readOnly="true">
+			<options>
+				<option value="idle">Idle</option>
+				<option value="cooling">Cooling</option>
+				<option value="heating">Heating</option>
+			</options>
+		</state>
+	</channel-type>
+	<channel-type id="cooker-operating-state">
+		<item-type>String</item-type>
+		<label>Operating State</label>
+		<description>Operating state reported by the appliance</description>
+		<tags>
+			<tag>Status</tag>
+		</tags>
+		<state readOnly="true">
+			<options>
+				<option value="stop">Stop</option>
+				<option value="standby">Standby</option>
+				<option value="working">Working</option>
+				<option value="complete">Complete</option>
+			</options>
+		</state>
+	</channel-type>
+	<channel-type id="high-alarm">
+		<item-type>Switch</item-type>
+		<label>High Temperature Alarm</label>
+		<description>High temperature alarm is active</description>
+		<tags>
+			<tag>Alarm</tag>
+			<tag>Temperature</tag>
+		</tags>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="low-alarm">
+		<item-type>Switch</item-type>
+		<label>Low Temperature Alarm</label>
+		<description>Low temperature alarm is active</description>
+		<tags>
+			<tag>Alarm</tag>
+			<tag>Temperature</tag>
+		</tags>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="probe-fault">
+		<item-type>Switch</item-type>
+		<label>Probe Fault</label>
+		<description>Sensor fault reported by the controller</description>
+		<tags>
+			<tag>Alarm</tag>
+		</tags>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="running">
+		<item-type>Switch</item-type>
+		<label>Cooking Cycle</label>
+		<description>Start or stop the cooking cycle</description>
+		<tags>
+			<tag>Switch</tag>
+			<tag>Power</tag>
+		</tags>
+		<autoUpdatePolicy>veto</autoUpdatePolicy>
+	</channel-type>
+	<channel-type id="cooking-time">
+		<item-type unitHint="min">Number:Time</item-type>
+		<label>Cooking Time</label>
+		<description>Configured cooking duration in whole minutes</description>
+		<tags>
+			<tag>Setpoint</tag>
+			<tag>Duration</tag>
+		</tags>
+		<state pattern="%d %unit%" min="0" max="5999" step="1"/>
+		<autoUpdatePolicy>veto</autoUpdatePolicy>
+	</channel-type>
+	<channel-type id="remaining-time">
+		<item-type unitHint="min">Number:Time</item-type>
+		<label>Remaining Time</label>
+		<description>Time remaining in the cooking cycle</description>
+		<tags>
+			<tag>Status</tag>
+			<tag>Duration</tag>
+		</tags>
+		<state readOnly="true" pattern="%d %unit%"/>
+	</channel-type>
+	<channel-type id="fault-code">
+		<item-type>Number</item-type>
+		<label>Fault Code</label>
+		<description>Device fault bitmask, zero when clear</description>
+		<tags>
+			<tag>Status</tag>
+		</tags>
+		<state readOnly="true"/>
+	</channel-type>
+</thing:thing-descriptions>

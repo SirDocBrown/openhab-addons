@@ -199,6 +199,7 @@
 /bundles/org.openhab.binding.icalendar/ @openhab/add-ons-maintainers
 /bundles/org.openhab.binding.icloud/ @openhab/add-ons-maintainers
 /bundles/org.openhab.binding.ihc/ @paulianttila
+/bundles/org.openhab.binding.inkbird/ @SirDocBrown
 /bundles/org.openhab.binding.insteon/ @jsetton
 /bundles/org.openhab.binding.intesis/ @hmerk
 /bundles/org.openhab.binding.iotawatt/ @PRosenb
